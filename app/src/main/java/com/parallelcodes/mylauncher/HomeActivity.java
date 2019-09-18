@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,14 +28,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomeActivity extends Activity {
+public abstract class HomeActivity extends Activity {
     TextView txtTime, txtDate;
     Calendar c;
     SimpleDateFormat simpleDateFormat;
     SimpleDateFormat simpleTimeFormat;
-    ImageView setaDireita;
-    ImageView setaEsquerda;
-    ImageView paginaInicial;
 
     PackageManager packageManager;
     public static List<AppInfo> apps;
@@ -150,6 +150,7 @@ public class HomeActivity extends Activity {
 
     }
 
+    int numTela = 0;
     @SuppressLint("LongLogTag")
     private void loadApps() {
         try {
@@ -163,40 +164,52 @@ public class HomeActivity extends Activity {
 
                 //aqui listagem dos apps, colocar paginacao
                 List<ResolveInfo> availableApps = packageManager.queryIntentActivities(i, 0);
-                //List<ResolveInfo> appTela = new List();
+                List<ResolveInfo> appTela = new ArrayList<>();
 
-                //ListaAplicativos = {Phone};
+                List<ResolveInfo> ListaAplicativos = new String[]{"ContactsContract.CommonDataKinds.Phone",
+                        "com.android.camera2.com.android.chrome",
+                        "com.android.camera.CameraActivity",
+                        "org.chromium.chrome.browser.ChromeTabbedActivity",
+                        "com.android.contacts.activities.PeopleActivity"};
+                //com.android.camera2, com.android.chrome,
+                //com.android.camera.CameraActivity
+                //org.chromium.chrome.browser.ChromeTabbedActivity
+                //com.android.contacts.activities.PeopleActivity
+                //
 
-//                for(){
-//
-//
-//                    if(listaAplicativo.posicao = availableApps){
-//                        appTela.add();
-//
-//                    }
-//
-//                }
+                int qtdApp = availableApps.size();
+                for(int x=0;x<=qtdApp;x++){
 
-                //usar appTela (conforme a pagina vai ser o numero de 0-8/9-18/19-27)
-                for (ResolveInfo ri : availableApps) {
-                    AppInfo appinfo = new AppInfo();
-                    appinfo.label = ri.loadLabel(packageManager);
-                    appinfo.name = ri.activityInfo.packageName;
-                    appinfo.icon = ri.activityInfo.loadIcon(packageManager);
-                    apps.add(appinfo);
+                    if(ListaAplicativos.get(x) == availableApps.get(int a){
+                        Object e1 = null;
+                        appTela.add(availableApps.add(a, ResolveInfo e1));
 
-
-                    availableApps.size(); //9 por tela
-                    //variavel local para saber qual tela estou
-                    //varrer a lista conforme o layout da tela que esta e reinderizar
-
-                    //criar metodo para incrementar alterarNumeroTela se recebe voltar descremeta e avancar incrementa e home volta 0
-
+                    }
 
                 }
 
+                //usar appTela (conforme a pagina vai ser o numero de 0-8/9-17/18-26)
+                    int numInicial = (9*numTela);
+                    int numFinal = (8+numInicial);
 
-            }
+                    for(int y=numInicial;y<numFinal;y++) {
+                        //for (ResolveInfo ri : availableApps) {
+                        for (ResolveInfo ri : appTela) {
+                            AppInfo appinfo = new AppInfo();
+                            appinfo.label = ri.loadLabel(packageManager);
+                            appinfo.name = ri.activityInfo.packageName;
+                            appinfo.icon = ri.activityInfo.loadIcon(packageManager);
+                            apps.add(appinfo);
+
+
+                            //availableApps.size(); //9 por tela
+                            //variavel local para saber qual tela estou
+                            //varrer a lista conforme o layout da tela que esta e reinderizar
+
+                        }
+                    }
+                }
+
 
         } catch (Exception ex) {
             Toast.makeText(HomeActivity.this, ex.getMessage().toString() + " Erro geração aplicativos", Toast.LENGTH_LONG).show();
@@ -205,15 +218,58 @@ public class HomeActivity extends Activity {
 
     }
 
+    ImageView setaDireita = (ImageView) findViewById(R.id.setaDireita);
+    ImageView setaEsquerda = (ImageView) findViewById(R.id.setaEsquerda);
+    ImageView paginaInicial = (ImageView) findViewById(R.id.paginaInicial);
+    Button btSetaDireita = (Button) findViewById(R.id.btSetaDireita);
+    Button btPaginaInicial = (Button) findViewById(R.id.btPaginaInicial);
+    Button btSetaEsquerda = (Button) findViewById(R.id.btSetaEsquerda);
+    private final Object view = new View();
 
-    public void viewBarraNavegacao(){
+//    btSetaDireita.setOnClickListener(new View.setOnClickListener() {
+//        public void onClick(View view) {
+//            alterarNumeroTela(numTela, "Soma");
+//        }
+//        });
 
-        setaDireita = (ImageView) findViewById(R.id.setaDireita);
-        setaEsquerda = (ImageView) findViewById(R.id.setaEsquerda);
-        paginaInicial = (ImageView) findViewById(R.id.paginaInicial);
+    private void setaDireita(View v) {
+        alterarNumeroTela(numTela, "Soma");
+    }
+
+//    btPaginaInicial.setOnClick(new View.OnClick() {
+//        public void onClick(View view) {
+//            alterarNumeroTela(numTela, "Inicial");
+//        }
+//    });
+
+    private void paginaInicial(View v) {
+        alterarNumeroTela(numTela, "Inicial");
+    }
 
 
+//    btSetaEsquerda.setOnClick(new View.OnClick() {
+//         public void onClick(View view) {
+//            alterarNumeroTela(numTela, "Subtrair");
+//        }
+//    });
 
+    private void setaEsquerda(View v) {
+        alterarNumeroTela(numTela, "Subtrair");
+    }
+
+    //criar metodo para incrementar alterarNumeroTela se recebe voltar descremeta e avancar incrementa e home volta 0
+    public int alterarNumeroTela(int numeroTela, String operacao){
+
+        if(operacao == "Soma"){
+            numeroTela = numeroTela + 1;
+        }
+        if(operacao == "Inicial"){
+            numeroTela = 0;
+        }
+        else{
+            numeroTela = numeroTela - 1;
+        }
+        return numeroTela;
     }
 
     public void showApps(View v) {
@@ -237,6 +293,4 @@ public class HomeActivity extends Activity {
     public void onBackPressed() {
         HideAppDrawer(false);
     }
-
-
 }

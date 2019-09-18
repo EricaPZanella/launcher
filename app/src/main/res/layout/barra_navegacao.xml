@@ -8,12 +8,29 @@
     tools:context=".HomeActivity"
     tools:showIn="@layout/activity_applist">
 
+    <Button
+        android:id="@+id/btSetaEsquerda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="setaEsquerda"
+        android:background="@drawable/seta_esquerda"
+        />
+    
     <ImageView
         android:id="@+id/setaEsquerda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         app:srcCompat="@drawable/seta_esquerda" />
+
+    <Button
+        android:id="@+id/btPaginaInicial"
+        android:layout_width="148dp"
+        android:layout_height="58dp"
+        android:layout_weight="1"
+        android:onClick="paginaInicial"
+        android:background="@drawable/tela_inicial"
+        />
 
     <ImageView
         android:id="@+id/paginaInicial"
@@ -21,6 +38,15 @@
         android:layout_height="58dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/tela_inicial" />
+
+    <Button
+        android:id="@+id/btSetaDireita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/seta_direita"
+        android:onClick="setaDireita"
+        />
 
     <ImageView
         android:id="@+id/setaDireita"
