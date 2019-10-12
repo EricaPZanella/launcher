@@ -2,11 +2,13 @@ package com.parallelcodes.mylauncher;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.provider.ContactsContract.CommonDataKinds.*;
+
 public abstract class HomeActivity extends Activity {
+    Object Context;
     TextView txtTime, txtDate;
     Calendar c;
     SimpleDateFormat simpleDateFormat;
@@ -42,6 +47,11 @@ public abstract class HomeActivity extends Activity {
     LinearLayout containAppDrawer;
 
     RelativeLayout ContainerHome;
+    private Object Phone;
+
+    protected HomeActivity() {
+        view = new View((android.content.Context) Context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,27 +176,28 @@ public abstract class HomeActivity extends Activity {
                 List<ResolveInfo> availableApps = packageManager.queryIntentActivities(i, 0);
                 List<ResolveInfo> appTela = new ArrayList<>();
 
-                List<ResolveInfo> ListaAplicativos = new String[]{"ContactsContract.CommonDataKinds.Phone",
-                        "com.android.camera2.com.android.chrome",
-                        "com.android.camera.CameraActivity",
-                        "org.chromium.chrome.browser.ChromeTabbedActivity",
-                        "com.android.contacts.activities.PeopleActivity"};
+//                List<ResolveInfo> ListaAplicativos = new ArrayList<ResolveInfo>();
+//                ListaAplicativos = {Phone,
+//                        com.android.camera2, com.android.chrome,
+//                        com.android.camera.CameraActivity,
+//                        org.chromium.chrome.browser.ChromeTabbedActivity,
+//                        com.android.contacts.activities.PeopleActivity};
                 //com.android.camera2, com.android.chrome,
                 //com.android.camera.CameraActivity
                 //org.chromium.chrome.browser.ChromeTabbedActivity
                 //com.android.contacts.activities.PeopleActivity
                 //
 
-                int qtdApp = availableApps.size();
-                for(int x=0;x<=qtdApp;x++){
-
-                    if(ListaAplicativos.get(x) == availableApps.get(int a){
-                        Object e1 = null;
-                        appTela.add(availableApps.add(a, ResolveInfo e1));
-
-                    }
-
-                }
+//                int qtdApp = availableApps.size();
+//                for(int x=0;x<=qtdApp;x++){
+//
+//                    if(ListaAplicativos.get(x) == availableApps.get(int a){
+//                        Object e1 = null;
+//                        appTela.add(availableApps.add(a, ResolveInfo e1));
+//
+//                    }
+//
+//                }
 
                 //usar appTela (conforme a pagina vai ser o numero de 0-8/9-17/18-26)
                     int numInicial = (9*numTela);
@@ -224,7 +235,7 @@ public abstract class HomeActivity extends Activity {
     Button btSetaDireita = (Button) findViewById(R.id.btSetaDireita);
     Button btPaginaInicial = (Button) findViewById(R.id.btPaginaInicial);
     Button btSetaEsquerda = (Button) findViewById(R.id.btSetaEsquerda);
-    private final Object view = new View();
+    private final Object view;
 
 //    btSetaDireita.setOnClickListener(new View.setOnClickListener() {
 //        public void onClick(View view) {
